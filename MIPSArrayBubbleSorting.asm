@@ -1,3 +1,7 @@
+#Matthew Herbst - herbstmb@muohio.edu
+#Last updated 10/17/2012
+#CSE 278
+
 .data
 	num1:		.word 	99
 	myArray:	.word	0:10	#Initilize the array
@@ -47,7 +51,8 @@ getData:
 	blt	$t1, 10, getData	#If the value of $t1 (counter) is < 10 get more input
 	
 	jr	$ra			#Jump back
-	
+
+#--------------------------------Sorting Logic----------------------------------------------------------------
 loop1: 	
 	blt	$t1, 9, loop2		#Keep looping while $t1 (counter) is < 9
 	jr	$ra			#loops have finished, jump back
@@ -72,6 +77,7 @@ swap:
 	sw	$t3, $a1		#Store what is in $t3 into $a1
 	
 	j	loop1			#Jump back to the first loop
+#-------------------------------------------------------------------------------------------------------------
 	
 printArray:
 	la	$a0, "\n["
