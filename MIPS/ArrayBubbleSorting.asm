@@ -39,31 +39,31 @@ getData:
 	syscall
 	
 # Sorting Logic ------------------------------------------------------------------------------------------------
-	la	$a0, myArray		#Put the starting address of myArray into $a0
-	add	$a1, $a0, 4		#Put the next value (ints, so +4) of myArray into $a1
-	add	$t9, $a0, 36		#Put the address of the last element of myArray [4*(size-1)] into $t9
+	la	$t0, myArray		#Put the starting address of myArray into $a0
+	add	$t1, $t0, 4		#Put the next value (ints, so +4) of myArray into $a1
+	add	$t9, $t0, 36		#Put the address of the last element of myArray [4*(size-1)] into $t9
 
 startSorting:
-	lw	$a2, ($a0)		#Load the value at memory address $a0 into $a2
-	lw	$a3, ($a1)		#Load the value at memory address $a1 into $a3
+	lw	$a2, ($t0)		#Load the value at memory address $a0 into $a2
+	lw	$a3, ($t1)		#Load the value at memory address $a1 into $a3
 
 	blt	$a2, $a3, movePointer	#If $a2 < $a3 then the two are in order
 	jal	swap			#If the two above are not in order, swap them
 	
 movePointer:
-	add	$a1, $a1, 4		#Move $a1 to the next value
-	ble	$a1, $t9, startSorting	#Keep sorting if $a1 is not past the last element in the array
-	add	$a0, $a0, 4		#Move $a0 to the next value
-	add	$a1, $a0, 4		#Reset $a1 to be the value after $a0
-	ble	$a0, $t9, startSorting	#Keep sorting if $a0 is not past the last element in the array
+	add	$t1, $t1, 4		#Move $a1 to the next value
+	ble	$t1, $t9, startSorting	#Keep sorting if $a1 is not past the last element in the array
+	add	$t0, $t0, 4		#Move $a0 to the next value
+	add	$t1, $t0, 4		#Reset $a1 to be the value after $a0
+	ble	$t0, $t9, startSorting	#Keep sorting if $a0 is not past the last element in the array
 	
 	la	$t0, myArray		#Load the address of myArray into $t0
 	li	$t1, 0			#Put the value of 0 into $t1
 	j	printArray		#Sorting is done! Print the sorted array
 	
 swap:
-	sw	$a2, ($a1)		#Store what is in $a2 into $t3
-	sw	$a3, ($a0)		#Store what is in $a1 into $a2
+	sw	$a2, ($t1)		#Store what is at memory address $t1 into $a2
+	sw	$a3, ($t0)		#Store what is at memory address $t0 into $a3
 	jr	$ra			#Jump back
 # End sorting-------------------------------------------------------------------------------------------------------------
 
